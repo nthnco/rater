@@ -180,7 +180,13 @@ UPDATE rankings SET position = position - 1 WHERE user_id = :u AND position > :d
 The `(user_id, position)` unique constraint must be `DEFERRABLE INITIALLY DEFERRED` so the
 shift doesn't trip over itself mid-transaction.
 
-**Re-ranking** a movie = delete it, then run the flow again.
+**Concurrency:** two sessions for the same user could interleave their shifts. Each
+insert/delete transaction first locks the user's row (`SELECT ... FROM users WHERE id = :u FOR
+UPDATE`) so a user's list is only ever modified by one transaction at a time.
+
+**Re-ranking** a movie = delete it, then run the flow again. Preserve the original
+`created_at` on re-insert (set `updated_at` to now), since `created_at` is what temporal
+train/test splits use.
 
 **Sessions:** a ranking takes several requests, so state lives in a `ranking_sessions` row. If
 the user's list changed since the session began (`n_at_start` no longer matches), invalidate
@@ -391,7 +397,9 @@ Use the `comparisons` table to fit a Bradley-Terry model on pairwise preferences
 
 ## 9. Evaluation (this is what goes on the resume)
 
-**Offline, on MovieLens** (time-based split or leave-one-out, per user):
+**Offline, on MovieLens** (time-based split, or leave-*latest*-out per user: hold out each
+user's most recent rating(s) by timestamp. Never a random split or random leave-one-out; that
+leaks future taste into training):
 
 - **Score prediction:** RMSE and MAE, compared against "global mean," "user mean," and Layer 0.
 - **Ranking quality:** NDCG@10 and Recall@10 for held-out liked movies.
