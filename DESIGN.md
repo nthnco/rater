@@ -251,13 +251,18 @@ CREATE TABLE movies (
   poster_path         TEXT,
   runtime_min         INT,
   genres              TEXT[],
-  directors           INT[],          -- TMDB person ids
-  top_cast            INT[],          -- top ~5 billed, TMDB person ids
+  directors           INT[],          -- TMDB person ids (people.id)
+  top_cast            INT[],          -- top ~5 billed, TMDB person ids (people.id)
   keywords            INT[],          -- TMDB keyword ids
   tmdb_popularity     REAL,
   tmdb_vote_average   REAL,
   tmdb_vote_count     INT,
   metadata_fetched_at TIMESTAMPTZ
+);
+
+CREATE TABLE people (                 -- names for directors/top_cast (display, taste profile)
+  id   INT PRIMARY KEY,               -- TMDB person id
+  name TEXT NOT NULL
 );
 
 CREATE TABLE movie_providers (        -- which services carry a movie, per region

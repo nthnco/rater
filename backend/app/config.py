@@ -11,7 +11,7 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=REPO_ROOT / ".env", extra="ignore")
 
     database_url: str = "postgresql+psycopg://rater:rater@localhost:5432/rater"
-    tmdb_api_key: str = ""
+    tmdb_read_token: str = ""  # TMDB "API Read Access Token" (v4), sent as a Bearer header
 
 
 settings = Settings()

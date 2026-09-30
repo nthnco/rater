@@ -13,7 +13,7 @@ once shipped.
 With Docker (Postgres + API + frontend, hot reload):
 
 ```sh
-cp .env.example .env        # add your TMDB key
+cp .env.example .env        # add your TMDB read access token
 docker compose up --build
 ```
 
