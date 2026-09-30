@@ -1,7 +1,9 @@
 # Rater
 
-A Beli-style movie ranking and recommendation app, powered by real
-predictive ML (no LLM wrapper) — pairwise ranking, two-tower retrieval +
-XGBoost reranking, cold-start via MovieLens 32M + TMDB metadata.
+A "Beli for movies": rank the movies you've seen by answering "which do you
+prefer?" questions, and Rater learns your taste to recommend what to watch
+next, filtered to your streaming services. Classical ML only (content-based
+similarity, matrix factorization), no LLM wrapper.
 
-Full write-up coming once shipped.
+See [DESIGN.md](DESIGN.md) for the full design. Write-up and metrics coming
+once shipped.
