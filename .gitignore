@@ -5,7 +5,6 @@ __pycache__/
 *.egg-info/
 .pytest_cache/
 .ruff_cache/
-mlflow_data/
 data/raw/
 data/processed/
 *.pt
