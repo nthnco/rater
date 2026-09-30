@@ -1,0 +1,55 @@
+{
+  "id": 603,
+  "title": "The Matrix",
+  "original_title": "The Matrix",
+  "release_date": "1999-03-30",
+  "overview": "Set in the 22nd century, The Matrix tells the story of a computer hacker who joins a group of underground insurgents fighting the vast and powerful computers who now rule the earth.",
+  "poster_path": "/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg",
+  "runtime": 136,
+  "genres": [{"id": 28, "name": "Action"}, {"id": 878, "name": "Science Fiction"}],
+  "popularity": 85.2,
+  "vote_average": 8.2,
+  "vote_count": 26000,
+  "credits": {
+    "cast": [
+      {"id": 2975, "name": "Laurence Fishburne", "order": 1},
+      {"id": 6384, "name": "Keanu Reeves", "order": 0},
+      {"id": 530, "name": "Carrie-Anne Moss", "order": 2},
+      {"id": 1331, "name": "Hugo Weaving", "order": 3},
+      {"id": 532, "name": "Joe Pantoliano", "order": 4},
+      {"id": 9372, "name": "Marcus Chong", "order": 5}
+    ],
+    "crew": [
+      {"id": 9340, "name": "Lana Wachowski", "job": "Director"},
+      {"id": 9339, "name": "Lilly Wachowski", "job": "Director"},
+      {"id": 9340, "name": "Lana Wachowski", "job": "Screenplay"},
+      {"id": 1091, "name": "Joel Silver", "job": "Producer"}
+    ]
+  },
+  "keywords": {
+    "keywords": [
+      {"id": 310, "name": "artificial intelligence (a.i.)"},
+      {"id": 4565, "name": "dystopia"},
+      {"id": 2964, "name": "simulated reality"}
+    ]
+  },
+  "watch/providers": {
+    "results": {
+      "US": {
+        "link": "https://www.themoviedb.org/movie/603-the-matrix/watch?locale=US",
+        "flatrate": [
+          {"provider_id": 1899, "provider_name": "Max", "logo_path": "/max.jpg", "display_priority": 1},
+          {"provider_id": 8, "provider_name": "Netflix", "logo_path": "/netflix.jpg", "display_priority": 0}
+        ],
+        "rent": [
+          {"provider_id": 2, "provider_name": "Apple TV", "logo_path": "/apple.jpg", "display_priority": 2}
+        ]
+      },
+      "GB": {
+        "flatrate": [
+          {"provider_id": 337, "provider_name": "Disney Plus", "logo_path": "/disney.jpg", "display_priority": 0}
+        ]
+      }
+    }
+  }
+}
