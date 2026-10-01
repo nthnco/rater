@@ -1,14 +1,210 @@
 :root {
   font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   color-scheme: light dark;
+
+  --bg: #ffffff;
+  --fg: #1a1a1a;
+  --muted: #6b6b6b;
+  --border: #e2e2e2;
+  --surface: #f3f3f3;
+  --accent: #c2410c;
+  --error: #b91c1c;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121212;
+    --fg: #ececec;
+    --muted: #9a9a9a;
+    --border: #2c2c2c;
+    --surface: #1e1e1e;
+    --accent: #fb923c;
+    --error: #f87171;
+  }
 }
 
 body {
   margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+a {
+  color: inherit;
+}
+
+/* Full-height column so the footer sits at the bottom even on short pages. */
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 main {
-  max-width: 720px;
+  flex: 1;
+  width: 100%;
+  max-width: 960px;
+  box-sizing: border-box;
   margin: 0 auto;
-  padding: 2rem 1rem;
+  padding: 1.5rem 1rem 3rem;
+}
+
+.site-header {
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 1rem;
+}
+
+.brand {
+  font-weight: 700;
+  font-size: 1.25rem;
+  text-decoration: none;
+  color: var(--accent);
+}
+
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 1.25rem 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem 1rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.site-footer p {
+  margin: 0;
+}
+
+/* Kept small: TMDB's guidelines ask that their logo not outshine the app's own branding. */
+.tmdb-logo {
+  height: 12px;
+  display: block;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.error {
+  color: var(--error);
+}
+
+/* Search */
+
+.search-input {
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 1.1rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--fg);
+}
+
+.poster-grid {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1.25rem 1rem;
+}
+
+.poster-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  text-decoration: none;
+}
+
+.poster-title {
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+/* Posters (2:3 is TMDB's poster aspect ratio) */
+
+.poster {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: 6px;
+  background: var(--surface);
+  display: block;
+}
+
+.poster-missing {
+  border: 1px dashed var(--border);
+}
+
+/* Movie detail: poster left, info right; stacks on narrow screens */
+
+.movie-detail {
+  display: grid;
+  grid-template-columns: minmax(180px, 280px) 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (max-width: 640px) {
+  .movie-detail {
+    grid-template-columns: 1fr;
+  }
+
+  .movie-detail .poster {
+    max-width: 240px;
+  }
+}
+
+.movie-info h1 {
+  margin: 0 0 0.25rem;
+  line-height: 1.15;
+}
+
+.overview {
+  line-height: 1.55;
+}
+
+.where-to-watch {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.where-to-watch h2 {
+  font-size: 1.1rem;
+  margin: 0 0 0.75rem;
+}
+
+.providers {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.provider {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.75rem 0.35rem 0.35rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+}
+
+.provider img {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+}
+
+.attribution {
+  font-size: 0.8rem;
+  margin-top: 0.75rem;
 }

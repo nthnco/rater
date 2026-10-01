@@ -1,23 +1,34 @@
-import { useEffect, useState } from 'react'
+import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
+import Footer from './components/Footer'
+import MovieDetailPage from './pages/MovieDetailPage'
+import SearchPage from './pages/SearchPage'
 
-type Status = 'loading' | 'ok' | 'error'
+function NotFound() {
+  return (
+    <section>
+      <h2>Page not found</h2>
+      <Link to="/">Back to search</Link>
+    </section>
+  )
+}
 
 function App() {
-  const [apiStatus, setApiStatus] = useState<Status>('loading')
-
-  useEffect(() => {
-    fetch('/api/health')
-      .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
-      .then((body: { status: string }) => setApiStatus(body.status === 'ok' ? 'ok' : 'error'))
-      .catch(() => setApiStatus('error'))
-  }, [])
-
   return (
-    <main>
-      <h1>Rater</h1>
-      <p>Rank the movies you've seen. Get recommendations you'll actually like.</p>
-      <p>API: {apiStatus}</p>
-    </main>
+    <BrowserRouter>
+      <header className="site-header">
+        <Link to="/" className="brand">
+          Rater
+        </Link>
+      </header>
+      <main>
+        <Routes>
+          <Route path="/" element={<SearchPage />} />
+          <Route path="/movies/:tmdbId" element={<MovieDetailPage />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
+      <Footer />
+    </BrowserRouter>
   )
 }
 
