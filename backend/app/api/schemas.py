@@ -27,6 +27,19 @@ class UserOut(BaseModel):
     region: str
 
 
+# --- streaming services ---
+
+
+class ServiceOut(BaseModel):
+    id: int  # TMDB provider_id
+    name: str
+    logo_path: str | None
+
+
+class UpdateServicesRequest(BaseModel):
+    service_ids: list[int] = Field(max_length=50)  # replaces the whole set; [] means none
+
+
 # --- movies ---
 
 
