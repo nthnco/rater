@@ -1,7 +1,7 @@
 /*
- * Theme: the Calcite palette. Components use only the semantic --color-* tokens below,
- * never raw hex. Extra shades are tints/shades of the four palette colors (color-mix in
- * sRGB); no other hues except the functional error color. Contrast ratios (WCAG) are noted
+ * Theme: the Arctic Reflection palette. Components use only the semantic --color-* tokens
+ * below, never raw hex. Extra shades are tints/shades of the five palette colors (color-mix
+ * in sRGB); no other hues except the functional error color. WCAG contrast ratios are noted
  * next to each text/background pair.
  */
 :root {
@@ -9,56 +9,77 @@
   color-scheme: light dark;
 
   /* Palette */
-  --calcite-gray: #dddcdb;
-  --calcite-orange: #fd7b41;
-  --calcite-peach: #edbf9b;
-  --calcite-charcoal: #3c4044;
+  --arctic-ice: #f4fcfb;
+  --arctic-mist: #acbcbf;
+  --arctic-slate: #698696;
+  --arctic-blue: #5289ad;
+  --arctic-navy: #243c4c;
 
   /* Semantic tokens: light mode */
-  --color-background: var(--calcite-gray);
-  --color-surface: color-mix(in srgb, var(--calcite-gray), white 45%); /* #ECECEB */
-  --color-text-primary: var(--calcite-charcoal); /* 7.6:1 on background, 8.8:1 on surface */
-  --color-text-muted: color-mix(in srgb, var(--calcite-charcoal), var(--calcite-gray) 20%); /* #5C5F62: 4.7:1 / 5.4:1 */
-  --color-border: color-mix(in srgb, var(--calcite-gray), var(--calcite-charcoal) 22%); /* dividers (decorative) */
-  --color-border-strong: color-mix(in srgb, var(--calcite-gray), var(--calcite-charcoal) 62%); /* #797B7D input/tile edges: 3.1:1 vs page, 3.6:1 vs surface */
+  --color-background: var(--arctic-ice);
+  --color-surface: white; /* cards, inputs */
+  --color-text-primary: var(--arctic-navy); /* 11.0:1 on background, 11.5:1 on surface */
+  /* Slate itself is only 3.7:1 on ice, so secondary text uses a deeper shade of it. */
+  --color-text-secondary: color-mix(in srgb, var(--arctic-slate), var(--arctic-navy) 30%); /* #547080: 5.0:1 / 5.2:1 */
+  --color-border: var(--arctic-mist); /* dividers (decorative) */
+  --color-border-strong: var(--arctic-slate); /* input/tile edges: 3.7:1 vs page, 3.9:1 vs surface */
 
-  --color-accent: var(--calcite-orange); /* fills, icons, large elements — not body text */
-  --color-accent-hover: color-mix(in srgb, var(--calcite-orange), var(--calcite-peach) 25%);
-  --color-accent-pressed: color-mix(in srgb, var(--calcite-orange), var(--calcite-charcoal) 8%);
-  --color-accent-strong: color-mix(in srgb, var(--calcite-orange), black 40%); /* #984A27: orange that reads as a boundary on light (5.3:1) */
-  --color-text-on-accent: color-mix(in srgb, var(--calcite-charcoal), black 30%); /* #2A2D30: 5.3:1 on orange (charcoal itself is 4.0, white 2.6) */
+  /* Blue with small light labels is only 3.6:1, so filled accents use a deeper shade of it. */
+  --color-accent: color-mix(in srgb, var(--arctic-blue), var(--arctic-navy) 30%); /* #447290 */
+  --color-accent-hover: color-mix(in srgb, var(--arctic-blue), var(--arctic-navy) 25%); /* #467695 */
+  --color-accent-pressed: color-mix(in srgb, var(--arctic-blue), var(--arctic-navy) 40%); /* #406A86 */
+  --color-text-on-accent: var(--arctic-ice); /* 5.0:1 on accent, 4.7 hover, 5.6 pressed */
 
-  --color-accent-soft: var(--calcite-peach); /* chips, selected states */
-  --color-text-on-accent-soft: var(--calcite-charcoal); /* 6.2:1 on peach */
+  --color-accent-soft: color-mix(in srgb, var(--arctic-blue), var(--arctic-ice) 75%); /* #CCDFE8: selected states */
+  --color-text-on-accent-soft: var(--arctic-navy); /* 8.4:1 */
 
-  /* Nav bar: charcoal in light mode */
-  --color-nav-background: var(--calcite-charcoal);
-  --color-nav-text: var(--calcite-gray); /* 7.6:1 */
-  --color-nav-text-muted: color-mix(in srgb, var(--calcite-gray), var(--calcite-charcoal) 15%);
-  --color-brand: var(--calcite-orange); /* 4.0:1 on charcoal; logo is 20px bold (large text, needs 3:1) */
+  --color-chip: color-mix(in srgb, var(--arctic-mist), white 50%); /* #D6DEDF: subtle chips */
+  --color-text-on-chip: var(--arctic-navy); /* 8.4:1 */
 
-  --color-focus: var(--calcite-charcoal);
-  /* Functional exception: errors keep a (toned, brick) red so they never read as the accent. */
-  --color-error: #9e3a2e; /* 5.0:1 on background, 5.7:1 on surface */
+  --color-disabled: color-mix(in srgb, var(--arctic-mist), var(--arctic-ice) 40%);
+  --color-text-disabled: var(--arctic-slate); /* disabled controls are exempt from contrast minimums */
+
+  /* Nav bar: navy */
+  --color-nav-background: var(--arctic-navy);
+  --color-nav-text: var(--arctic-ice); /* 11.0:1 */
+  --color-nav-text-secondary: var(--arctic-mist); /* 5.9:1 */
+  --color-brand: color-mix(in srgb, var(--arctic-blue), var(--arctic-ice) 40%); /* #93B7CC: 5.4:1 on navy */
+
+  --color-focus: var(--color-accent); /* 5.0:1 on background */
+  /* Functional exception: errors keep a toned brick red so they never read as the accent. */
+  --color-error: #a2453f; /* 5.8:1 on background, 6.1:1 on surface */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-background: var(--calcite-charcoal);
-    --color-surface: color-mix(in srgb, var(--calcite-charcoal), var(--calcite-gray) 8%); /* #494C50 */
-    --color-text-primary: var(--calcite-gray); /* 7.6:1 on background, 6.3:1 on surface */
-    --color-text-muted: color-mix(in srgb, var(--calcite-gray), var(--calcite-charcoal) 15%); /* #C5C5C4: 6.1:1 / 5.0:1 */
-    --color-border: color-mix(in srgb, var(--calcite-charcoal), var(--calcite-gray) 22%);
-    --color-border-strong: color-mix(in srgb, var(--calcite-charcoal), var(--calcite-gray) 60%); /* #9D9E9F: 3.9:1 vs page, 3.2:1 vs surface */
+    --color-background: var(--arctic-navy);
+    --color-surface: color-mix(in srgb, var(--arctic-navy), var(--arctic-ice) 6%); /* #304856 */
+    --color-text-primary: var(--arctic-ice); /* 11.0:1 on background, 9.2:1 on surface */
+    --color-text-secondary: var(--arctic-mist); /* 5.9:1 / 4.9:1 */
+    --color-border: var(--arctic-slate); /* dividers (decorative) */
+    --color-border-strong: color-mix(in srgb, var(--arctic-slate), var(--arctic-ice) 25%); /* #8CA4AF: 4.4:1 / 3.7:1 */
 
-    --color-accent-strong: var(--calcite-orange); /* 3.3:1 boundary on dark surface */
+    /* Raw blue on navy is only 3.0:1, so dark mode uses lighter tints of it with navy text. */
+    --color-accent: color-mix(in srgb, var(--arctic-blue), var(--arctic-ice) 40%); /* #93B7CC */
+    --color-accent-hover: color-mix(in srgb, var(--arctic-blue), var(--arctic-ice) 50%); /* #A3C2D4 */
+    --color-accent-pressed: color-mix(in srgb, var(--arctic-blue), var(--arctic-ice) 30%); /* #83ACC4 */
+    --color-text-on-accent: var(--arctic-navy); /* 5.4:1 on accent, 6.2 hover, 4.8 pressed */
 
-    --color-nav-background: color-mix(in srgb, var(--calcite-charcoal), black 25%); /* a step darker than the page */
-    --color-nav-text: var(--calcite-gray);
-    --color-nav-text-muted: color-mix(in srgb, var(--calcite-gray), var(--calcite-charcoal) 15%);
+    --color-accent-soft: color-mix(in srgb, var(--arctic-navy), var(--arctic-blue) 35%); /* #34576E */
+    --color-text-on-accent-soft: var(--arctic-ice); /* 7.4:1 */
 
-    --color-focus: var(--calcite-orange); /* 4.0:1 on charcoal */
-    --color-error: #f6b4a3; /* 6.0:1 on background, 4.9:1 on surface */
+    --color-chip: color-mix(in srgb, var(--arctic-navy), var(--arctic-mist) 20%); /* #3F5663 */
+    --color-text-on-chip: var(--arctic-ice); /* 7.4:1 */
+
+    --color-disabled: color-mix(in srgb, var(--arctic-navy), var(--arctic-slate) 30%);
+    --color-text-disabled: var(--arctic-mist);
+
+    --color-nav-background: color-mix(in srgb, var(--arctic-navy), black 25%); /* #1B2D39: a step darker than the page */
+    --color-nav-text: var(--arctic-ice); /* 13.6:1 */
+    --color-nav-text-secondary: var(--arctic-mist); /* 7.2:1 */
+    --color-brand: color-mix(in srgb, var(--arctic-blue), var(--arctic-ice) 40%); /* 6.7:1 */
+
+    --color-error: #eba9a1; /* 5.9:1 on background, 4.9:1 on surface */
   }
 }
 
@@ -94,10 +115,10 @@ main {
 }
 
 .site-header {
-  /* Re-scope text tokens so everything inside the charcoal bar stays legible. */
+  /* Re-scope text tokens so everything inside the navy bar stays legible. */
   --color-text-primary: var(--color-nav-text);
-  --color-text-muted: var(--color-nav-text-muted);
-  --color-focus: var(--calcite-orange);
+  --color-text-secondary: var(--color-nav-text-secondary);
+  --color-focus: var(--color-brand);
 
   background: var(--color-nav-background);
   color: var(--color-text-primary);
@@ -173,7 +194,9 @@ main {
 }
 
 .button:disabled {
-  opacity: 0.6;
+  background: var(--color-disabled);
+  border-color: var(--color-disabled);
+  color: var(--color-text-disabled);
   cursor: default;
 }
 
@@ -208,14 +231,15 @@ main {
   color: var(--color-text-primary);
 }
 
+/* Secondary text rather than mist: mist is only 1.8:1 on light backgrounds. */
 input::placeholder {
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
 }
 
 .hint {
   font-weight: normal;
   font-size: 0.85rem;
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
 }
 
 /* Streaming service picker */
@@ -254,8 +278,8 @@ input::placeholder {
 .service-tile.selected {
   color: var(--color-text-on-accent-soft);
   background: var(--color-accent-soft);
-  border-color: var(--color-accent-strong);
-  box-shadow: 0 0 0 1px var(--color-accent-strong);
+  border-color: var(--color-accent); /* light 3.8:1 vs fill; dark 3.6:1 */
+  box-shadow: 0 0 0 1px var(--color-accent);
 }
 
 .actions {
@@ -274,7 +298,7 @@ input::placeholder {
   justify-content: center;
   gap: 0.75rem 1rem;
   font-size: 0.8rem;
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
 }
 
 .site-footer p {
@@ -289,7 +313,7 @@ input::placeholder {
 }
 
 .muted {
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
 }
 
 .error {
@@ -398,10 +422,10 @@ input::placeholder {
   align-items: center;
   gap: 0.5rem;
   padding: 0.35rem 0.75rem 0.35rem 0.35rem;
-  border: 1px solid var(--color-accent-soft);
+  border: 1px solid var(--color-chip);
   border-radius: 999px;
-  background: var(--color-accent-soft);
-  color: var(--color-text-on-accent-soft);
+  background: var(--color-chip);
+  color: var(--color-text-on-chip);
 }
 
 .provider img {

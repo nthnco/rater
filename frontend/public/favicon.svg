@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
-  <!-- Calcite palette (a favicon can't read CSS variables): charcoal tile, ranked bars. -->
-  <rect width="48" height="48" rx="11" fill="#3c4044"/>
-  <rect x="10" y="10" width="28" height="7" rx="3.5" fill="#fd7b41"/>
-  <rect x="10" y="20.5" width="21" height="7" rx="3.5" fill="#edbf9b"/>
-  <rect x="10" y="31" width="14" height="7" rx="3.5" fill="#dddcdb"/>
+  <!-- Arctic Reflection palette (a favicon can't read CSS variables): navy tile, ranked bars. -->
+  <rect width="48" height="48" rx="11" fill="#243c4c"/>
+  <rect x="10" y="10" width="28" height="7" rx="3.5" fill="#5289ad"/>
+  <rect x="10" y="20.5" width="21" height="7" rx="3.5" fill="#acbcbf"/>
+  <rect x="10" y="31" width="14" height="7" rx="3.5" fill="#f4fcfb"/>
 </svg>
