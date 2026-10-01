@@ -1,4 +1,5 @@
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
+import Footer from './components/Footer'
 import MovieDetailPage from './pages/MovieDetailPage'
 import SearchPage from './pages/SearchPage'
 
@@ -26,6 +27,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
+      <Footer />
     </BrowserRouter>
   )
 }
