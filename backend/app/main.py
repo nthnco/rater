@@ -1,10 +1,12 @@
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
-from app.api import movies
+from app.api import auth, me, movies
 from app.services.tmdb import TMDBNotFoundError, TMDBUnavailableError
 
 app = FastAPI(title="Rater")
+app.include_router(auth.router)
+app.include_router(me.router)
 app.include_router(movies.router)
 
 
