@@ -107,3 +107,72 @@ main {
 .poster-missing {
   border: 1px dashed var(--border);
 }
+
+/* Movie detail: poster left, info right; stacks on narrow screens */
+
+.movie-detail {
+  display: grid;
+  grid-template-columns: minmax(180px, 280px) 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (max-width: 640px) {
+  .movie-detail {
+    grid-template-columns: 1fr;
+  }
+
+  .movie-detail .poster {
+    max-width: 240px;
+  }
+}
+
+.movie-info h1 {
+  margin: 0 0 0.25rem;
+  line-height: 1.15;
+}
+
+.overview {
+  line-height: 1.55;
+}
+
+.where-to-watch {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.where-to-watch h2 {
+  font-size: 1.1rem;
+  margin: 0 0 0.75rem;
+}
+
+.providers {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.provider {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.75rem 0.35rem 0.35rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+}
+
+.provider img {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+}
+
+.attribution {
+  font-size: 0.8rem;
+  margin-top: 0.75rem;
+}

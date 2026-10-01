@@ -1,4 +1,5 @@
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
+import MovieDetailPage from './pages/MovieDetailPage'
 import SearchPage from './pages/SearchPage'
 
 function NotFound() {
@@ -21,6 +22,7 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<SearchPage />} />
+          <Route path="/movies/:tmdbId" element={<MovieDetailPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
