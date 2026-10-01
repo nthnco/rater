@@ -330,7 +330,8 @@ Add indexes on `rankings(user_id, bucket, position)`, `movies(release_date)`, an
 | POST   | `/auth/signup`, `/auth/login`, `/auth/logout` | account basics                                            |
 | GET    | `/me`                                         | current user                                              |
 | GET    | `/services`                                   | list of supported streaming services                      |
-| PUT    | `/me/services`                                | set the user's services                                   |
+| GET    | `/me/services`                                | the user's current services                               |
+| PUT    | `/me/services`                                | set the user's services (replaces the whole set)          |
 | GET    | `/movies/search?q=`                           | proxy to TMDB search (all movies)                         |
 | GET    | `/movies/{tmdb_id}`                           | movie details plus providers, cached                      |
 | GET    | `/movies/{tmdb_id}/prediction`                | predicted score for this user                             |
