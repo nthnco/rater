@@ -38,19 +38,82 @@ export class ApiError extends Error {
   }
 }
 
-async function getJson<T>(path: string, signal?: AbortSignal): Promise<T> {
-  const res = await fetch(`/api${path}`, { signal })
-  if (!res.ok) {
-    const body = await res.json().catch(() => ({}))
-    throw new ApiError(res.status, body.detail ?? `Request failed (${res.status})`)
+export type User = { id: number; email: string; region: string }
+
+export type Service = { id: number; name: string; logo_path: string | null }
+
+// FastAPI errors are {"detail": "..."} or, for validation errors, {"detail": [{msg, ...}]}.
+function errorMessage(body: { detail?: unknown }, status: number): string {
+  if (typeof body.detail === 'string') return body.detail
+  if (Array.isArray(body.detail) && body.detail.length > 0) {
+    return body.detail.map((d: { msg?: string }) => d.msg ?? 'Invalid input').join('; ')
   }
-  return res.json() as Promise<T>
+  return `Request failed (${status})`
 }
 
+async function request<T>(
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE',
+  path: string,
+  options: { body?: unknown; signal?: AbortSignal } = {},
+): Promise<T> {
+  // Same-origin requests send the httpOnly auth cookie automatically; JS never touches it.
+  const res = await fetch(`/api${path}`, {
+    method,
+    signal: options.signal,
+    headers: options.body !== undefined ? { 'Content-Type': 'application/json' } : undefined,
+    body: options.body !== undefined ? JSON.stringify(options.body) : undefined,
+  })
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}))
+    throw new ApiError(res.status, errorMessage(body, res.status))
+  }
+  return (res.status === 204 ? undefined : await res.json()) as T
+}
+
+// --- movies ---
+
 export function searchMovies(query: string, signal?: AbortSignal): Promise<MovieSearchResult[]> {
-  return getJson(`/movies/search?q=${encodeURIComponent(query)}`, signal)
+  return request('GET', `/movies/search?q=${encodeURIComponent(query)}`, { signal })
 }
 
 export function getMovie(tmdbId: number, signal?: AbortSignal): Promise<MovieDetail> {
-  return getJson(`/movies/${tmdbId}`, signal)
+  return request('GET', `/movies/${tmdbId}`, { signal })
+}
+
+// --- auth ---
+
+export function signup(email: string, password: string): Promise<User> {
+  return request('POST', '/auth/signup', { body: { email, password } })
+}
+
+export function login(email: string, password: string): Promise<User> {
+  return request('POST', '/auth/login', { body: { email, password } })
+}
+
+export function logout(): Promise<void> {
+  return request('POST', '/auth/logout')
+}
+
+/** The logged-in user, or null if not logged in. */
+export async function getMe(): Promise<User | null> {
+  try {
+    return await request<User>('GET', '/me')
+  } catch (err) {
+    if (err instanceof ApiError && err.status === 401) return null
+    throw err
+  }
+}
+
+// --- streaming services ---
+
+export function listServices(): Promise<Service[]> {
+  return request('GET', '/services')
+}
+
+export function getMyServices(): Promise<Service[]> {
+  return request('GET', '/me/services')
+}
+
+export function setMyServices(serviceIds: number[]): Promise<Service[]> {
+  return request('PUT', '/me/services', { body: { service_ids: serviceIds } })
 }
