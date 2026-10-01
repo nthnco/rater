@@ -1,36 +1,80 @@
+/*
+ * Theme: the Calcite palette. Components use only the semantic --color-* tokens below,
+ * never raw hex. Extra shades are tints/shades of the four palette colors (color-mix in
+ * sRGB); no other hues except the functional error color. Contrast ratios (WCAG) are noted
+ * next to each text/background pair.
+ */
 :root {
   font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   color-scheme: light dark;
 
-  --bg: #ffffff;
-  --fg: #1a1a1a;
-  --muted: #6b6b6b;
-  --border: #e2e2e2;
-  --surface: #f3f3f3;
-  --accent: #c2410c;
-  --error: #b91c1c;
+  /* Palette */
+  --calcite-gray: #dddcdb;
+  --calcite-orange: #fd7b41;
+  --calcite-peach: #edbf9b;
+  --calcite-charcoal: #3c4044;
+
+  /* Semantic tokens: light mode */
+  --color-background: var(--calcite-gray);
+  --color-surface: color-mix(in srgb, var(--calcite-gray), white 45%); /* #ECECEB */
+  --color-text-primary: var(--calcite-charcoal); /* 7.6:1 on background, 8.8:1 on surface */
+  --color-text-muted: color-mix(in srgb, var(--calcite-charcoal), var(--calcite-gray) 20%); /* #5C5F62: 4.7:1 / 5.4:1 */
+  --color-border: color-mix(in srgb, var(--calcite-gray), var(--calcite-charcoal) 22%); /* dividers (decorative) */
+  --color-border-strong: color-mix(in srgb, var(--calcite-gray), var(--calcite-charcoal) 62%); /* #797B7D input/tile edges: 3.1:1 vs page, 3.6:1 vs surface */
+
+  --color-accent: var(--calcite-orange); /* fills, icons, large elements — not body text */
+  --color-accent-hover: color-mix(in srgb, var(--calcite-orange), var(--calcite-peach) 25%);
+  --color-accent-pressed: color-mix(in srgb, var(--calcite-orange), var(--calcite-charcoal) 8%);
+  --color-accent-strong: color-mix(in srgb, var(--calcite-orange), black 40%); /* #984A27: orange that reads as a boundary on light (5.3:1) */
+  --color-text-on-accent: color-mix(in srgb, var(--calcite-charcoal), black 30%); /* #2A2D30: 5.3:1 on orange (charcoal itself is 4.0, white 2.6) */
+
+  --color-accent-soft: var(--calcite-peach); /* chips, selected states */
+  --color-text-on-accent-soft: var(--calcite-charcoal); /* 6.2:1 on peach */
+
+  /* Nav bar: charcoal in light mode */
+  --color-nav-background: var(--calcite-charcoal);
+  --color-nav-text: var(--calcite-gray); /* 7.6:1 */
+  --color-nav-text-muted: color-mix(in srgb, var(--calcite-gray), var(--calcite-charcoal) 15%);
+  --color-brand: var(--calcite-orange); /* 4.0:1 on charcoal; logo is 20px bold (large text, needs 3:1) */
+
+  --color-focus: var(--calcite-charcoal);
+  /* Functional exception: errors keep a (toned, brick) red so they never read as the accent. */
+  --color-error: #9e3a2e; /* 5.0:1 on background, 5.7:1 on surface */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #121212;
-    --fg: #ececec;
-    --muted: #9a9a9a;
-    --border: #2c2c2c;
-    --surface: #1e1e1e;
-    --accent: #fb923c;
-    --error: #f87171;
+    --color-background: var(--calcite-charcoal);
+    --color-surface: color-mix(in srgb, var(--calcite-charcoal), var(--calcite-gray) 8%); /* #494C50 */
+    --color-text-primary: var(--calcite-gray); /* 7.6:1 on background, 6.3:1 on surface */
+    --color-text-muted: color-mix(in srgb, var(--calcite-gray), var(--calcite-charcoal) 15%); /* #C5C5C4: 6.1:1 / 5.0:1 */
+    --color-border: color-mix(in srgb, var(--calcite-charcoal), var(--calcite-gray) 22%);
+    --color-border-strong: color-mix(in srgb, var(--calcite-charcoal), var(--calcite-gray) 60%); /* #9D9E9F: 3.9:1 vs page, 3.2:1 vs surface */
+
+    --color-accent-strong: var(--calcite-orange); /* 3.3:1 boundary on dark surface */
+
+    --color-nav-background: color-mix(in srgb, var(--calcite-charcoal), black 25%); /* a step darker than the page */
+    --color-nav-text: var(--calcite-gray);
+    --color-nav-text-muted: color-mix(in srgb, var(--calcite-gray), var(--calcite-charcoal) 15%);
+
+    --color-focus: var(--calcite-orange); /* 4.0:1 on charcoal */
+    --color-error: #f6b4a3; /* 6.0:1 on background, 4.9:1 on surface */
   }
 }
 
 body {
   margin: 0;
-  background: var(--bg);
-  color: var(--fg);
+  background: var(--color-background);
+  color: var(--color-text-primary);
 }
 
 a {
   color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
 }
 
 /* Full-height column so the footer sits at the bottom even on short pages. */
@@ -50,7 +94,14 @@ main {
 }
 
 .site-header {
-  border-bottom: 1px solid var(--border);
+  /* Re-scope text tokens so everything inside the charcoal bar stays legible. */
+  --color-text-primary: var(--color-nav-text);
+  --color-text-muted: var(--color-nav-text-muted);
+  --color-focus: var(--calcite-orange);
+
+  background: var(--color-nav-background);
+  color: var(--color-text-primary);
+  border-bottom: 1px solid var(--color-nav-background);
   padding: 0.75rem 1rem;
   display: flex;
   align-items: center;
@@ -62,7 +113,7 @@ main {
   font-weight: 700;
   font-size: 1.25rem;
   text-decoration: none;
-  color: var(--accent);
+  color: var(--color-brand);
 }
 
 .nav {
@@ -83,20 +134,30 @@ main {
 
 .button {
   font: inherit;
-  border: 1px solid var(--border);
+  border: 1px solid var(--color-border-strong);
   border-radius: 8px;
   padding: 0.6rem 1rem;
-  background: var(--surface);
-  color: var(--fg);
+  background: var(--color-surface);
+  color: var(--color-text-primary);
   cursor: pointer;
   text-decoration: none;
   display: inline-block;
 }
 
 .button.primary {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: #fff;
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-text-on-accent);
+}
+
+.button.primary:hover:not(:disabled) {
+  background: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+}
+
+.button.primary:active:not(:disabled) {
+  background: var(--color-accent-pressed);
+  border-color: var(--color-accent-pressed);
 }
 
 .button.small {
@@ -107,7 +168,7 @@ main {
   border: none;
   background: none;
   padding: 0;
-  color: var(--fg);
+  color: var(--color-text-primary);
   text-decoration: underline;
 }
 
@@ -141,16 +202,20 @@ main {
   font: inherit;
   font-weight: normal;
   padding: 0.6rem 0.75rem;
-  border: 1px solid var(--border);
+  border: 1px solid var(--color-border-strong);
   border-radius: 8px;
-  background: var(--surface);
-  color: var(--fg);
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+}
+
+input::placeholder {
+  color: var(--color-text-muted);
 }
 
 .hint {
   font-weight: normal;
   font-size: 0.85rem;
-  color: var(--muted);
+  color: var(--color-text-muted);
 }
 
 /* Streaming service picker */
@@ -172,9 +237,9 @@ main {
   padding: 0.6rem;
   font: inherit;
   text-align: left;
-  color: var(--fg);
-  background: var(--surface);
-  border: 2px solid var(--border);
+  color: var(--color-text-primary);
+  background: var(--color-surface);
+  border: 2px solid var(--color-border-strong);
   border-radius: 10px;
   cursor: pointer;
 }
@@ -187,8 +252,10 @@ main {
 }
 
 .service-tile.selected {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 1px var(--accent);
+  color: var(--color-text-on-accent-soft);
+  background: var(--color-accent-soft);
+  border-color: var(--color-accent-strong);
+  box-shadow: 0 0 0 1px var(--color-accent-strong);
 }
 
 .actions {
@@ -199,7 +266,7 @@ main {
 }
 
 .site-footer {
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--color-border);
   padding: 1.25rem 1rem;
   display: flex;
   flex-wrap: wrap;
@@ -207,25 +274,26 @@ main {
   justify-content: center;
   gap: 0.75rem 1rem;
   font-size: 0.8rem;
-  color: var(--muted);
+  color: var(--color-text-muted);
 }
 
 .site-footer p {
   margin: 0;
 }
 
-/* Kept small: TMDB's guidelines ask that their logo not outshine the app's own branding. */
+/* Kept small: TMDB's guidelines ask that their logo not outshine the app's own branding.
+   The logo keeps TMDB's own colors (their attribution terms require the official file). */
 .tmdb-logo {
   height: 12px;
   display: block;
 }
 
 .muted {
-  color: var(--muted);
+  color: var(--color-text-muted);
 }
 
 .error {
-  color: var(--error);
+  color: var(--color-error);
 }
 
 /* Search */
@@ -235,10 +303,10 @@ main {
   box-sizing: border-box;
   font-size: 1.1rem;
   padding: 0.75rem 1rem;
-  border: 1px solid var(--border);
+  border: 1px solid var(--color-border-strong);
   border-radius: 8px;
-  background: var(--surface);
-  color: var(--fg);
+  background: var(--color-surface);
+  color: var(--color-text-primary);
 }
 
 .poster-grid {
@@ -269,12 +337,12 @@ main {
   aspect-ratio: 2 / 3;
   object-fit: cover;
   border-radius: 6px;
-  background: var(--surface);
+  background: var(--color-surface);
   display: block;
 }
 
 .poster-missing {
-  border: 1px dashed var(--border);
+  border: 1px dashed var(--color-border-strong);
 }
 
 /* Movie detail: poster left, info right; stacks on narrow screens */
@@ -308,7 +376,7 @@ main {
 .where-to-watch {
   margin-top: 2rem;
   padding-top: 1rem;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--color-border);
 }
 
 .where-to-watch h2 {
@@ -330,9 +398,10 @@ main {
   align-items: center;
   gap: 0.5rem;
   padding: 0.35rem 0.75rem 0.35rem 0.35rem;
-  border: 1px solid var(--border);
+  border: 1px solid var(--color-accent-soft);
   border-radius: 999px;
-  background: var(--surface);
+  background: var(--color-accent-soft);
+  color: var(--color-text-on-accent-soft);
 }
 
 .provider img {
