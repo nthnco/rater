@@ -1,4 +1,4 @@
-import { type FormEvent, useState } from 'react'
+import { type SubmitEvent, useState } from 'react'
 import { Link, Navigate, useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../auth/useAuth'
 
@@ -27,14 +27,15 @@ export default function AuthPage({ mode }: { mode: Mode }) {
 
   if (auth.user) return <Navigate to={next ?? '/'} replace />
 
-  async function onSubmit(e: FormEvent) {
+  async function onSubmit(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault()
     setError(null)
     setSubmitting(true)
     try {
       if (mode === 'signup') {
         await auth.signup(email, password)
-        navigate(next ?? '/', { replace: true })
+        // Onboarding step 1 (DESIGN.md §2): pick streaming services.
+        navigate('/settings/services?welcome=1', { replace: true })
       } else {
         await auth.login(email, password)
         navigate(next ?? '/', { replace: true })

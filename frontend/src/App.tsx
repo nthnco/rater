@@ -1,10 +1,12 @@
 import { BrowserRouter, Link, Route, Routes, useNavigate } from 'react-router-dom'
 import AuthProvider from './auth/AuthProvider'
+import RequireAuth from './auth/RequireAuth'
 import { useAuth } from './auth/useAuth'
 import Footer from './components/Footer'
 import AuthPage from './pages/AuthPage'
 import MovieDetailPage from './pages/MovieDetailPage'
 import SearchPage from './pages/SearchPage'
+import ServicesPage from './pages/ServicesPage'
 
 function NotFound() {
   return (
@@ -33,6 +35,7 @@ function Header() {
         {user === undefined ? null : user ? (
           <>
             <span className="muted nav-email">{user.email}</span>
+            <Link to="/settings/services">My services</Link>
             <button type="button" className="button link" onClick={onLogout}>
               Log out
             </button>
@@ -61,6 +64,14 @@ function App() {
             <Route path="/movies/:tmdbId" element={<MovieDetailPage />} />
             <Route path="/login" element={<AuthPage mode="login" />} />
             <Route path="/signup" element={<AuthPage mode="signup" />} />
+            <Route
+              path="/settings/services"
+              element={
+                <RequireAuth>
+                  <ServicesPage />
+                </RequireAuth>
+              }
+            />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
